@@ -52,6 +52,7 @@ class Posts extends Base {
       }
 
       public function edit($data){
+        print_r($data);
         $allowed_types = [
             "jpg" => "image/jpeg",
             "png" => "image/png"
@@ -77,7 +78,7 @@ class Posts extends Base {
             $query->execute([
                 $data["title"],
                 $filename,
-                $post_id,
+                $data["post_id"],
                 $_SESSION["user_id"]
             ]);
 
