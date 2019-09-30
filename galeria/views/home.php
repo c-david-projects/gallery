@@ -31,13 +31,12 @@
 
 
         foreach($images as $image){
-            echo '</br></br>';
             echo $image["title"];
-            echo '</br></br>';
-            echo '<img src=uploads/'.$image["image"].'>';
+            echo '<img alt="" src="uploads/'.$image["image"].'">';
             if(isset($_SESSION["user_id"])){
                 echo'<h2>Editar</h2>';
                 echo'<form method="POST" action="'.$_SERVER["REQUEST_URI"].'" enctype="multipart/form-data">';
+                echo'<input value="'.$image["post_id"].'" type="hidden">';
                 echo '<div><label>Title<input type="text" value="'.$image["title"].'" name="title" required></label></div> ';
                 echo'<div><label>image<input type="file" name="image" required></label></div>';
                 echo'<div><button type="submit" name="edit">Concluir</button></div></form>';

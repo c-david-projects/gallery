@@ -67,19 +67,17 @@ class Posts extends Base {
             $file_extension = array_search($_FILES["image"]["type"],$allowed_types);
             $filename = date("YmdHis") ."_". mt_rand(100000, 999999).".".$file_extension;
 
-            $user_id = 1;
-
             $query = $this->db->prepare("
-            UPDATE posts
-            SET title = ?, image = ?
-            WHERE post_id = ?
+                UPDATE posts
+                SET title = ?, image = ?
+                WHERE post_id = ?
                 AND user_id = ?
             ");
 
             $query->execute([
                 $data["title"],
-                $user_id,
                 $filename,
+                $post_id,
                 $_SESSION["user_id"]
             ]);
 
