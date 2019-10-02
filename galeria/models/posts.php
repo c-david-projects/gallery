@@ -7,7 +7,7 @@ class Posts extends Base {
     public function getImages(){
         $query = $this->db->prepare("
 
-        SELECT post_id, title, parent_id, image
+        SELECT post_id, title, parent_id, image, user_id
         FROM posts
         WHERE parent_id = 0
         ");
@@ -27,13 +27,14 @@ class Posts extends Base {
             isset($_FILES["image"]) &&
             $_FILES["image"]["size"] > 0 &&
             $_FILES["image"]["error"] === 0 &&
-            in_array($_FILES["image"]["type"], $allowed_types)
+            in_array($_FILES["image"]["type"], $allowed_types)&&
+            isset($_SESSION["user_id"])
 
         ){
             $file_extension = array_search($_FILES["image"]["type"],$allowed_types);
             $filename = date("YmdHis") ."_". mt_rand(100000, 999999).".".$file_extension;
 
-            $user_id = 1;
+            // $user_id = 1;
 
             $query = $this->db->prepare("
                 INSERT INTO posts (title, parent_id, user_id, image)
@@ -42,7 +43,7 @@ class Posts extends Base {
 
             $query->execute([
                 $data["title"],
-                $user_id,
+                $_SESSION["user_id"],
                 $filename
             ]);
 
@@ -51,8 +52,7 @@ class Posts extends Base {
 
       }
 
-      public function edit($data){
-        print_r($data);
+      public function edit($data) {
         $allowed_types = [
             "jpg" => "image/jpeg",
             "png" => "image/png"
@@ -62,10 +62,10 @@ class Posts extends Base {
             isset($_FILES["image"]) &&
             $_FILES["image"]["size"] > 0 &&
             $_FILES["image"]["error"] === 0 &&
-            in_array($_FILES["image"]["type"], $allowed_types)
-
+            in_array($_FILES["image"]["type"], $allowed_types) &&
+            isset($_SESSION["user_id"])
         ){
-            $file_extension = array_search($_FILES["image"]["type"],$allowed_types);
+            $file_extension = array_search($_FILES["image"]["type"], $allowed_types);
             $filename = date("YmdHis") ."_". mt_rand(100000, 999999).".".$file_extension;
 
             $query = $this->db->prepare("
@@ -75,7 +75,7 @@ class Posts extends Base {
                 AND user_id = ?
             ");
 
-            $query->execute([
+            $result = $query->execute([
                 $data["title"],
                 $filename,
                 $data["post_id"],
@@ -87,7 +87,22 @@ class Posts extends Base {
 
     }
 
-}
+    public function delete($data) {
+
+            $query = $this->db->prepare("
+
+                DELETE FROM posts
+                WHERE post_id = ?
+                AND user_id = ?
+            ");
+
+            $result = $query->execute([
+                $data["post_id"],
+                $_SESSION["user_id"]
+            ]);
+        }
+
+    }
 
 ?>
 
