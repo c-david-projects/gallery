@@ -2,7 +2,7 @@
 
 session_start();
 
-$controllers = ["home","posts","access"];
+$controllers = ["home","posts","access","requests"];
 $controller = $controllers[0];
 
 if(isset($_GET["controller"]) &&

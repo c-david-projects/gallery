@@ -87,7 +87,7 @@ class Posts extends Base {
 
     }
 
-    public function delete($data) {
+    public function deletePost($postId) {
 
             $query = $this->db->prepare("
 
@@ -97,7 +97,7 @@ class Posts extends Base {
             ");
 
             $result = $query->execute([
-                $data["post_id"],
+                $postId,
                 $_SESSION["user_id"]
             ]);
         }

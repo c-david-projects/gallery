@@ -8,6 +8,27 @@
             width:150px;
         }
         </style>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script>
+
+        $(document).ready(function () {
+
+        const deletePost = documentGetElementById("#btn");
+
+        $.ajax({
+            type: "post",
+            data: { "post_id":""},
+            dataType: "json",
+            url: "?controller=requests",
+            success: function (response) {
+
+            console.log(response);
+
+            }
+        });
+        });
+
+        </script>
 	</head>
     <body>
         <nav>
@@ -39,7 +60,7 @@
                 echo'<input name="post_id" value="'.$image["post_id"].'" type="hidden">';
                 echo '<div><label>Title<input type="text" value="'.$image["title"].'" name="title" required></label></div> ';
                 echo'<div><label>image<input type="file" name="image" required></label></div>';
-                echo'<div><button type="button" name="delete">Apagar</button></div>';
+                echo'<div><button type="button" id="btn" data-post_id="'.$image["post_id"].'" name="delete">Apagar</button></div>';
                 echo'<div><button type="submit" name="edit">Concluir</button></div></form>';
             }
     }
