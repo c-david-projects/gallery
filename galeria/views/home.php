@@ -2,33 +2,13 @@
 <html lang="pt">
 	<head>
  		<meta charset="utf-8">
-      	<title>Upload de Ficheiros</title>
+      	<title>Upload de Ficheiros ayyaya</title>
         <style>
         img{
             width:150px;
         }
         </style>
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script>
-
-        $(document).ready(function () {
-
-        const deletePost = documentGetElementById("#btn");
-
-        $.ajax({
-            type: "post",
-            data: { "post_id":""},
-            dataType: "json",
-            url: "?controller=requests",
-            success: function (response) {
-
-            console.log(response);
-
-            }
-        });
-        });
-
-        </script>
+      
 	</head>
     <body>
         <nav>
@@ -60,11 +40,39 @@
                 echo'<input name="post_id" value="'.$image["post_id"].'" type="hidden">';
                 echo '<div><label>Title<input type="text" value="'.$image["title"].'" name="title" required></label></div> ';
                 echo'<div><label>image<input type="file" name="image" required></label></div>';
-                echo'<div><button type="button" id="btn" data-post_id="'.$image["post_id"].'" name="delete">Apagar</button></div>';
+                echo'<div><button type="button" id="btn" class="" data-post_id="'.$image["post_id"].'" name="delete">Apagar</button></div>';
                 echo'<div><button type="submit" name="edit">Concluir</button></div></form>';
             }
     }
         ?>
+
+         <script
+			  src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script>
+
+    $("#btn").click(function(e) {
+                e.preventDefault();
+                console.log("teste");
+                const post_id = e.target.getAttribute("data-post_id");
+        $.ajax({
+            type: "POST",
+            url: "?controller=requests",
+            data: { 
+                "post_id":post_id
+            },
+            success: function(result) {
+                alert('ok');
+            },
+            error: function(result) {
+                alert('error');
+            }
+        });
+});
+    
+
+
+
+        </script>
     </body>
 </html>
 

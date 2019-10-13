@@ -89,6 +89,7 @@ class Posts extends Base {
 
     public function deletePost($postId) {
 
+
             $query = $this->db->prepare("
 
                 DELETE FROM posts
